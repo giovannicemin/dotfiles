@@ -134,5 +134,5 @@ export PATH="~/.emacs.d/bin:$PATH"
 #eval "$(starship init bash)"
 
 # adding cool stuff to flex on other linux users
-eval neofetch
+#eval neofetch
 alias config='/usr/bin/git --git-dir=/home/joke/.dotfiles/ --work-tree=/home/joke'
