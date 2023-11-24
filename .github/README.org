@@ -1,0 +1,25 @@
+* Giovanni's dotfiles
+Dotfiles are the customization files used in Linux or other Unix-based systems to
+personalize the system at your will.
+
+** How to organize the dotfiles
+To manage my dotfiles I use a git bare repository. REF: https://www.atlassian.com/git/tutorials/dotfiles
+The trick is to store the git bare repository in a "side" folder (in my case $HOME/.dotfiles)
+    using a specially crafted alias so that commands are run against that repository and
+    not the usual .git local folder, which would interfere with any other git repo.
+
+#+BEGIN_SRC shell
+git init --bare $HOME/.dotfiles
+# I added this command to config.fish, so it works also for fish shell
+echo "alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'" >> $HOME/.bashrc
+config config --local status.showUntrackedFiles no
+git remote add origin https://github.com/giovannicemin/dotfiles.git
+#+END_SRC
+
+
+** My dotfiles
+*** bashrc
+*** fish
+*** Doom Emacs
+Stored in ./.doom.d these config are still quite vanilla.
+ Nevertheless I do have some interesting tweaks added to my configs.
