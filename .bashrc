@@ -135,4 +135,4 @@ export PATH="~/.emacs.d/bin:$PATH"
 
 # adding cool stuff to flex on other linux users
 #eval neofetch
-alias config='/usr/bin/git --git-dir=/home/joke/.dotfiles/ --work-tree=/home/joke'
+alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
