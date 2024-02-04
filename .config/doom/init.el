@@ -141,10 +141,13 @@
        ;;idris             ; a language you can depend on
        ;;json              ; At least it ain't XML
        ;;(java +meghanada) ; the poster child for carpal tunnel syndrome
-       javascript        ; all(hope(abandon(ye(who(enter(here))))))
+       javascript          ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia             ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)
-       latex               ; writing papers in Emacs has never been so fun
+       (latex              ; writing papers in Emacs has never been so fun
+        +latexmk           ; automates the process of compiling a LaTeX document.
+        +lsp
+        +cdlatex)          ; fast insertion of env templates and math stuff
        ;;lean
        ;;factor
        ;;ledger            ; an accounting system in Emacs
@@ -156,6 +159,7 @@
        (org                ; organize your plain life in plain text
         +pretty
         +journal
+        +present
         +roam2)
        ;;php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
@@ -199,3 +203,6 @@
 
 ;; Starting emacsclient in fullscreen
 (add-to-list 'default-frame-alist '(fullscreen . fullboth))
+
+;; visual line
+(setq evil-respect-visual-line-mode t)

@@ -101,3 +101,6 @@
 (package! minimap)
 (package! olivetti)
 (package! golden-ratio)
+
+(package! snow)
+(package! fireplace)

@@ -795,6 +795,14 @@ behavior with the following.
 (setq display-line-numbers-type 't) ; For relative line numbers, set this to `relative'.
 #+end_src
 
+I want the 'j' and 'k' keys to move respect to visual lines and not logical
+#+BEGIN_SRC emacs-lisp :tangle no
+(use-package-hook! evil
+  :pre-init
+  (setq evil-respect-visual-line-mode t) ;; sane j and k behavior
+  t)
+#+END_SRC
+
 * MARKDOWN
 
 #+begin_src emacs-lisp
@@ -878,6 +886,61 @@ toggle-neotree.
       :desc "Open directory in neotree"  "d n" #'neotree-dir)
 #+END_SRC
 
+* LATEX
+For my setup I have followed [[https://michaelneuper.com/posts/efficient-latex-editing-with-emacs/][this]].
+Dependencies: install texlive-science texlive-bibtex-extra texliv-fonts-extra
+
+Setting the default pdf viewer to *pdf-tools*
+#+BEGIN_SRC emacs-lisp
+(setq +latex-viewers '(pdf-tools))
+#+END_SRC
+
+** Pretty Symbols
+Pretty symbols is a minor mode that displays text like gamma with their unicode
+equivalents (γ) in math mode. It is enabled by default in Doom Emacs, otherwise
+you can run M-x prettify-symbols-mode.
+
+** Text Folding
+Text folding can remove some of the visual noise in a LaTeX buffer by enabling
+TeX-fold-mode. This is also enabled by default in Doom Emacs.
+
+** CDLatex
+Backquote (`) followed by any character inserts a LaTeX math macro into the buffer.
+If necessary, a pair of \( is inserted to switch to math mode. For example,
+typing `a inserts \(\alpha\).
+
+Useful to insert some snippets:
+#+BEGIN_SRC emacs-lisp
+(map! :map cdlatex-mode-map
+      :i "TAB" #'cdlatex-tab)
+#+END_SRC
+otherwise see:
+
+** YASnippet
+YASnippet is a template system for Emacs. It allows you to type an abbreviation
+and automatically expand it into function templates when pressing TAB.
+You can install YASnippet by enabling :editor snippets in your doom block.
+
+** LSP
+Also need a language server for LaTeX installed. The two most popular ones are
+TexLab and Digestif.
+
+I installed digestif following [[https://github.com/astoff/digestif?tab=readme-ov-file][this.]] The script is in \usr\local\bin\digestif
+
+For TexLab see [[https://github.com/latex-lsp/texlab][here]].
+
+** Xenops
+Xenops is a LaTeX editing environment for mathematical documents in Emacs.
+Not using here, but might come handy later.
+
+** GNU Calc
+Calc is a calculator that’s part of Emacs. It can do symbolic differentiation,
+linear algebra, taylor series expansions, among many other things.
+You can start calc in embedded mode by running M-x calc-embedded and perform
+operations on LaTeX equations.
+
+
+
 * OPEN SPECIFIC FILES
 Keybindings to open files that I work with all the time using the find-file
 command, which is the interactive file search that opens with 'C-x C-f' in GNU
@@ -948,7 +1011,7 @@ add keybinding for inserting a link
         org-todo-keywords        ; This overwrites the default Doom org-todo-keywords
           '((sequence
            "TODO(t)"             ; A task that is ready to be tackled
-           "IN-PROGRESS"      ; A started task
+           "IN-PROGRESS"         ; A started task
            "STUDY(s)"            ; Things to study
            "LECT(l)"             ; Reorder lecture notes
            "PROJ(p)"             ; A project that contains other tasks
@@ -1264,7 +1327,8 @@ Let me insert here some custom keybindings.
 #+begin_src emacs-lisp
 (map! :leader
       (:prefix ("m")
-       :desc "Org-insert-structure-template"  "S" #'org-insert-structure-template))
+       :desc "Org-insert-structure-template"  "S" #'org-insert-structure-template
+       :desc "Org-ref-insert-link"            "@" #'org-ref-insert-link))
 #+end_src
 
 
@@ -1394,6 +1458,7 @@ Following:
 https://daryl.wakatara.com/zotero-and-org-roam-academic-research-workflow/
 #+begin_src emacs-lisp
 (use-package! org-ref
+  :after org
   :config
   (setq bibtex-completion-bibliography '("~/Documents/second_brain/refs/biblio.bib")
         bibtex-completion-notes-path "~/Documents/second_brain/refs/"
@@ -1414,7 +1479,8 @@ https://daryl.wakatara.com/zotero-and-org-roam-academic-research-workflow/
 
 (use-package! org-ref-prettify
   :after org-ref
-  (add-hook 'org-mode-hook 'org-ref-prettify-mode))
+  :hook (org-mode . org-ref-prettify-mode))
+  ;; (add-hook 'org-mode-hook 'org-ref-prettify-mode))
 #+end_src
 
 ** Org-roam
